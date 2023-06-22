@@ -4,10 +4,27 @@ import './App.css';
 
 function App() {
   const [newItem, setNewItem] = useState('');
+  const [todo, setTodo] = useState([]);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    setTodo((currentTodo) => {
+      return [
+        ...currentTodo,
+        { id:crypto.randomUUID(),
+          title: newItem,
+          complete: false
+        }
+      ]
+    });
+
+    setNewItem('');
+  }
 
   return (
     <>
-      <form className='new-item-form'>
+      <form onSubmit={handleSubmit} className='new-item-form'>
         <div className='form-row'>
           <label htmlFor='item'>New Item</label>
           <input
@@ -22,20 +39,17 @@ function App() {
 
       <h1 className='header'>Todo List</h1>
       <ul className='list'>
-        <li>
-          <label>
-            <input type='checkbox' />
-            Item 1
-          </label>
-          <button className='btn btn-danger'>Delete</button>
-        </li>
-        <li>
-          <label>
-            <input type='checkbox' />
-            Item 2
-          </label>
-          <button className='btn btn-danger'>Delete</button>
-        </li>
+        {todo.map(item => {
+          return (
+            <li key={item.id}>
+              <label>
+                <input type='checkbox' checked={item.completed} />
+                {item.title}
+              </label>
+              <button className='btn btn-danger'>Delete</button>                  
+            </li>
+          )
+        })}
       </ul>
     </>
   )
