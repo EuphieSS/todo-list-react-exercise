@@ -4,22 +4,33 @@ import './App.css';
 
 function App() {
   const [newItem, setNewItem] = useState('');
-  const [todo, setTodo] = useState([]);
+  const [todos, setTodos] = useState([]);
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    setTodo((currentTodo) => {
+    setTodos((currentTodo) => {
       return [
         ...currentTodo,
         { id:crypto.randomUUID(),
           title: newItem,
-          complete: false
+          completed: false
         }
       ]
     });
 
     setNewItem('');
+  }
+
+  function toggleTodo(id, completed) {
+    setTodos(currentTodo => {
+      return currentTodo.map(todo => {
+        if (todo.id === id) {
+          return { ...todo, completed }
+        }
+        return todo;
+      })
+    })
   }
 
   return (
@@ -39,12 +50,16 @@ function App() {
 
       <h1 className='header'>Todo List</h1>
       <ul className='list'>
-        {todo.map(item => {
+        {todos.map(todo => {
           return (
-            <li key={item.id}>
+            <li key={todo.id}>
               <label>
-                <input type='checkbox' checked={item.completed} />
-                {item.title}
+                <input
+                  type='checkbox'
+                  checked={todo.completed}
+                  onChange={event => toggleTodo(todo.id, event.target.checked)}
+                 />
+                {todo.title}
               </label>
               <button className='btn btn-danger'>Delete</button>                  
             </li>
