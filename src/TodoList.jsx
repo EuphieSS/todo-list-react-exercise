@@ -1,3 +1,5 @@
+import TodoItem from "./TodoItem";
+
 function TodoList(props) {
   const { todos } = props;
 
@@ -6,17 +8,7 @@ function TodoList(props) {
       {todos.length === 0 && 'Nothing on the list yet'}
       {todos.map(todo => {
         return (
-          <li key={todo.id}>
-            <label>
-              <input
-                type='checkbox'
-                checked={todo.completed}
-                // onChange={event => toggleTodo(todo.id, event.target.checked)}
-              />
-              {todo.title}
-            </label>
-            {/* <button className='btn btn-danger' onClick={() => deleteTodo(todo.id)}>Delete</button>                   */}
-          </li>
+          <TodoItem completed={todo.completed} id={todo.id} title={todo.title} key={todo.id}/>
         )
       })}
     </ul>
