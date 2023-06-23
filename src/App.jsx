@@ -6,6 +6,18 @@ import NewTodoForm from './NewTodoForm';
 function App() {
   const [todos, setTodos] = useState([]);
 
+  function addTodo(title) {
+    setTodos((currentTodo) => {
+      return [
+        ...currentTodo,
+        { id:crypto.randomUUID(),
+          title,
+          completed: false
+        }
+      ]
+    });
+  }
+
   function toggleTodo(id, completed) {
     setTodos(currentTodo => {
       return currentTodo.map(todo => {
@@ -25,7 +37,7 @@ function App() {
 
   return (
     <>
-      <NewTodoForm />
+      <NewTodoForm addTodo={addTodo}/>
       <h1 className='header'>Todo List</h1>
       <ul className='list'>
         {todos.length === 0 && 'Nothing on the list yet'}

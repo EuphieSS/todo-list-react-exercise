@@ -1,20 +1,15 @@
 import { useState } from "react";
 
-function NewTodoForm() {
+function NewTodoForm(props) {
+  const { addTodo } = props;
   const [newItem, setNewItem] = useState('');
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    // setTodos((currentTodo) => {
-    //   return [
-    //     ...currentTodo,
-    //     { id:crypto.randomUUID(),
-    //       title: newItem,
-    //       completed: false
-    //     }
-    //   ]
-    // });
+    if (newItem === '') return;
+
+    addTodo(newItem);
 
     setNewItem('');
   }
