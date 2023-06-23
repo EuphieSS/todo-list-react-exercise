@@ -1,26 +1,10 @@
 import { useState } from 'react';
 
 import './App.css';
+import NewTodoForm from './NewTodoForm';
 
 function App() {
-  const [newItem, setNewItem] = useState('');
   const [todos, setTodos] = useState([]);
-
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    setTodos((currentTodo) => {
-      return [
-        ...currentTodo,
-        { id:crypto.randomUUID(),
-          title: newItem,
-          completed: false
-        }
-      ]
-    });
-
-    setNewItem('');
-  }
 
   function toggleTodo(id, completed) {
     setTodos(currentTodo => {
@@ -41,19 +25,7 @@ function App() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className='new-item-form'>
-        <div className='form-row'>
-          <label htmlFor='item'>New Item</label>
-          <input
-            value={newItem}
-            onChange={event => setNewItem(event.target.value)}
-            type='text'
-            id='item'
-          />
-        </div>
-        <button className='btn'>Add</button>
-      </form>
-
+      <NewTodoForm />
       <h1 className='header'>Todo List</h1>
       <ul className='list'>
         {todos.length === 0 && 'Nothing on the list yet'}
